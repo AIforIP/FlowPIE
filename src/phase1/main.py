@@ -11,6 +11,7 @@ from config.config import (
     MAX_ITERATIONS, DEFAULT_MAX_DEPTH,
     RESULTS_DIR, BENCHMARK_AGG_CSV, BENCHMARK_PER_QUERY_CSV,
     BENCHMARK_CURVE_PNG, BENCHMARK_COMP_PNG,
+    PHASE1_JSON_PATH,
     Swan_Project, Swan_workspace, Swan_experiment_name
 )
 from .mcts_flow import PatentInnovationMCTSFlow
@@ -38,24 +39,23 @@ def main(data_path: str = "your_input_data.json",
          swan_logdir: str = None):
     """ 
     Args:
-        data_path: 输入数据文件路径
-        output_path: 输出结果文件路径
-        p_term: 终止概率
-        top_k: 第一层Top-K数
-        iterations: 迭代次数
-        max_depth: 最大搜索深度
-        process_count: 处理的数据条数(None表示全部)
+        data_path: input data path
+        output_path: output data path
+        p_term: termination probability
+        top_k: top-k for the first layer
+        iterations: number of iterations
+        max_depth: maximum search depth
+        process_count: number of data to process (None means all)
     """
     
-    # 加载测试数据
+
     try:
         data = load_test_data(data_path)
-        print(f"成功加载 {len(data)} 条测试数据")
+        print(f"Load {len(data)} test data")
     except Exception as e:
-        print(f"加载数据失败: {e}")
+        print(f"Error while loading test data: {e}")
         return
 
-    # 初始化 swanlab run（如可用），支持环境变量覆盖
     run = None
     try:
         if swanlab is not None:
@@ -76,32 +76,27 @@ def main(data_path: str = "your_input_data.json",
     except Exception as e:
         print('Error while initializing swanlab:', e)
     
-    # 初始化结果列表
+  
     datalist = []
-    # benchmark级别聚合容器
-    benchmark_per_query_avg = []   # 每个query的iter_avg_rewards列表
-    benchmark_per_query_top5 = []  # 每个query的iter_top5_rewards列表
+
+    benchmark_per_query_avg = []   
+    benchmark_per_query_top5 = []  
     
-    # 确定处理数量
     process_count = min(process_count, len(data))
-    # 处理每个查询
     for i in tqdm(range(0, process_count)):
         user_query = data[i]['topic']
         idx = data[i]["index"]
         print(f"\n{'='*80}")
-        print(f"处理第 {i+1}/{process_count} 个查询")
+        print(f"Processing query {i+1}/{process_count}")
         print(f"Query: {user_query}")
         print('='*80)
         
         mcts = None
         
         try:
-            # 创建索引
-            if i == 0:  # 只在第一次创建
-                print("\n检查并创建必要的索引...")
+            if i == 0:  
                 create_fulltext_index(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
             
-            # 初始化MCTS-Flow系统
             mcts = PatentInnovationMCTSFlow(
                 NEO4J_URI, 
                 NEO4J_USER, 
@@ -111,9 +106,8 @@ def main(data_path: str = "your_input_data.json",
                 top_k=top_k
             )
             
-            # 运行搜索
             print("\n" + "="*80)
-            print("开始MCTS-Flow搜索...")
+            print("Flow-Guided MCTS Start...")
             print("="*80)
             best_path, best_reward, best_idea, all_ideas = mcts.run(
                 iterations=iterations,
@@ -155,10 +149,9 @@ def main(data_path: str = "your_input_data.json",
                 
                
                 save_results_to_json(datalist, output_path)
-                print(f"\n结果已保存到 {output_path}")
-                print(f"本次生成 {len(all_ideas)} 个idea")
+                print(f"\nresults saved to {output_path}")
+                print(f"genetate {len(all_ideas)} ideas")
             
-            # 收集本次query的iteration序列（用于benchmark聚合）
             try:
                 if hasattr(mcts, 'iter_avg_rewards'):
                     benchmark_per_query_avg.append(list(mcts.iter_avg_rewards))
@@ -173,7 +166,7 @@ def main(data_path: str = "your_input_data.json",
                 benchmark_per_query_avg.append([])
                 benchmark_per_query_top5.append([])
         except Exception as e:
-            print(f"\n处理查询时出错: {e}")
+            print(f"\nError while processing query {i+1}/{process_count}: {e}")
             import traceback
             traceback.print_exc()
             
@@ -184,17 +177,14 @@ def main(data_path: str = "your_input_data.json",
         
     
     print("\n" + "="*80)
-    print("所有查询处理完成!")
-    print(f"总计处理: {process_count} 个查询")
-    print(f"生成: {len(datalist)} 条完整结果")
-    print(f"结果保存到: {output_path}")
+    print(f"total queries: {process_count}")
+    print(f"generate: {len(datalist)} results")
+    print(f"saved: {output_path}")
     print("="*80)
-    # 基准级别聚合与绘图（保存本地并上报到 swanlab）
     try:
         out_dir = RESULTS_DIR
         os.makedirs(out_dir, exist_ok=True)
 
-        # 将 per-query iter_avg 合成为矩阵（nan填充）
         num_queries = len(benchmark_per_query_avg)
         max_iters = iterations
         arr = np.full((num_queries, max_iters), np.nan, dtype=float)
@@ -202,13 +192,11 @@ def main(data_path: str = "your_input_data.json",
             for j, v in enumerate(row[:max_iters]):
                 arr[qi, j] = float(v)
 
-        # 计算跨query的均值/标准差/95% CI（对每个iteration）
         means = np.nanmean(arr, axis=0)
         stds = np.nanstd(arr, axis=0)
         counts = np.sum(~np.isnan(arr), axis=0)
         ci95 = 1.96 * stds / np.sqrt(np.where(counts > 0, counts, 1))
 
-        # 保存CSV（iteration-level）
         csv_bench = os.path.join(out_dir, BENCHMARK_AGG_CSV)
         with open(csv_bench, 'w') as fh:
             fh.write('iteration,mean,std,count,ci95_lower,ci95_upper\n')
@@ -220,7 +208,6 @@ def main(data_path: str = "your_input_data.json",
                 fh.write(f"{idx+1},{mu},{sd},{n},{mu-ci},{mu+ci}\n")
         print(f"Saved benchmark agg CSV: {csv_bench}")
 
-        # 保存 per-query 矩阵以便复现
         csv_per_query = os.path.join(out_dir, BENCHMARK_PER_QUERY_CSV)
         with open(csv_per_query, 'w') as fh:
             header = ['query_idx'] + [f'iter_{i+1}' for i in range(max_iters)]
@@ -230,7 +217,6 @@ def main(data_path: str = "your_input_data.json",
                 fh.write(','.join(row) + '\n')
         print(f"Saved per-query matrix CSV: {csv_per_query}")
 
-        # 绘制Benchmark-level Top-5 Avg曲线（均值与±1std与95%CI）
         try:
             x = list(range(1, max_iters + 1))
             plt.figure(figsize=(8, 4))
@@ -272,10 +258,8 @@ def main(data_path: str = "your_input_data.json",
         except Exception as e:
             print('Failed to plot iteration comparison:', e)
 
-        # 尝试将CSV和图片上报到swanlab（如果run仍存在且swanlab可用）
         try:
             if swanlab is not None and run is not None:
-                # 上报CSV
                 try:
                     if hasattr(swanlab, 'upload'):
                         swanlab.upload(csv_bench)
@@ -283,7 +267,6 @@ def main(data_path: str = "your_input_data.json",
                 except Exception:
                     pass
 
-                # 上报图片
                 try:
                     if hasattr(swanlab, 'upload'):
                         swanlab.upload(bench_png)
@@ -291,7 +274,6 @@ def main(data_path: str = "your_input_data.json",
                 except Exception:
                     pass
 
-                # 上报时间序列为metric（每step记录mean）
                 try:
                     for idx, mu in enumerate(means, start=1):
                         try:
@@ -309,7 +291,6 @@ def main(data_path: str = "your_input_data.json",
     except Exception as e:
         print('Benchmark aggregation failed:', e)
 
-    # 结束 swanlab run（如果初始化成功）
     try:
         if swanlab is not None and run is not None:
             try:
@@ -326,27 +307,10 @@ def main_single_query(user_query: str,
                      top_k: int = DEFAULT_TOP_K,
                      iterations: int = MAX_ITERATIONS,
                      max_depth: int = DEFAULT_MAX_DEPTH):
-    """
-    运行单个查询的便捷函数
-    
-    Args:
-        user_query: 用户查询文本
-        p_term: 终止概率
-        top_k: 第一层Top-K数
-        iterations: 迭代次数
-        max_depth: 最大搜索深度
-        
-    Returns:
-        (best_path, best_reward, best_idea, all_ideas)
-    """
     mcts = None
     
     try:
-        # 创建索引
-        print("检查并创建必要的索引...")
         create_fulltext_index(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD)
-        
-        # 初始化MCTS-Flow系统
         mcts = PatentInnovationMCTSFlow(
             NEO4J_URI, 
             NEO4J_USER, 
@@ -356,7 +320,6 @@ def main_single_query(user_query: str,
             top_k=top_k
         )
         
-        # 运行搜索
         best_path, best_reward, best_idea, all_ideas = mcts.run(
             iterations=iterations,
             max_depth=max_depth
@@ -371,17 +334,9 @@ def main_single_query(user_query: str,
 
 if __name__ == "__main__":
     main(
-        data_path="/home/whb/FlowPIE/flowpie/flowpie/data/bench_topics_test.json",
+        data_path=PHASE1_JSON_PATH,
         output_path="/home/whb/FlowPIE/flowpie/flowpie/results/AIBench/AIBench_flow_dag.json",
-        p_term=0.2,
-        top_k=3,
-        iterations=20,
-        max_depth=10,
         process_count=1,  # 0 indicates processing all data
-        swan_mode='cloud',
-        swan_project=Swan_Project,
-        swan_workspace=Swan_workspace,
-        swan_experiment_name=Swan_experiment_name
     )
     
 
