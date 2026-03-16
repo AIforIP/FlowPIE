@@ -1,9 +1,9 @@
-<img src="./assets/logo.png" alt="FlowPIE overview" width="600"/>
+<h3 align="center"><img style="margin:auto;" src='./assets/logo.png' width=800px></h3>
 
-# FlowPIE
+<h3 align="center"><strong>FlowPIE</strong>: A Test-Time Scientific Idea Evolution
+with Flow-Guided Literature Exploration</h3>
 
-FlowPIE: Test-Time Scientific Idea Evolution
-with Flow-Guided Literature Exploration, is a new framework for autonomous scientific idea generation. This repository contains code, small example data and utilities used to produce the ideas in the paper.
+FlowPIE is a new framework for autonomous scientific idea generation. This repository contains code, small example data and utilities used to produce the ideas in the paper.
 
 ## Instruction 📝
 
