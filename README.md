@@ -36,13 +36,13 @@ pip install -r requirements.txt
 
 Before running the code, please make sure you have filled in all the configuration information in the config fileq.
 
-Run Phase 1 (Test-time flow-guided retrieval and generation). Phase1 provides a module entrypoint:
+Run Phase 1 (flow-guided MCTS). Phase1 provides a module entrypoint:
 
 ```bash
 python -m src.phase1.main
 ```
 
-Run Phase 2 (test-time evolution & evaluation). Phase2 provides a module entrypoint:
+Run Phase 2 (test-time evolution). Phase2 provides a module entrypoint:
 
 ```bash
 python -m src.phase2.main
