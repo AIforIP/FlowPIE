@@ -11,7 +11,7 @@ from config.config import (
     MAX_ITERATIONS, DEFAULT_MAX_DEPTH,
     RESULTS_DIR, BENCHMARK_AGG_CSV, BENCHMARK_PER_QUERY_CSV,
     BENCHMARK_CURVE_PNG, BENCHMARK_COMP_PNG,
-    PHASE1_JSON_PATH,
+    PHASE1_JSON_PATH, PHASE1_OUTPUT_PATH,
     Swan_Project, Swan_workspace, Swan_experiment_name
 )
 from .mcts_flow import PatentInnovationMCTSFlow
@@ -335,7 +335,7 @@ def main_single_query(user_query: str,
 if __name__ == "__main__":
     main(
         data_path=PHASE1_JSON_PATH,
-        output_path="/home/whb/FlowPIE/flowpie/flowpie/results/AIBench/AIBench_flow_dag.json",
+        output_path=PHASE1_OUTPUT_PATH,
         process_count=1,  # 0 indicates processing all data
     )
     
