@@ -3,7 +3,7 @@ from typing import List
 from .models import Patent, GeneratedIdea
 from .utils import evaluator
 from config.config import (
-    LAMBDA_SEMANTIC, LAMBDA_NOVELTY, LAMBDA_COHERENCE,
+    LAMBDA_NOVELTY, LAMBDA_FEASIBILITY,
     NOVELTY_RATING_SCALE, FEASIBILITY_RATING_SCALE
 )
 import json
@@ -34,7 +34,7 @@ def extract_score(model_output: str, min_score=0, max_score=5):
     if match:
         return float(match.group(1))
 
-    return 3.0
+    return 1.0
 
 
 def safe_parse(output, type_key):
@@ -63,9 +63,8 @@ class RewardCalculator:
         """
         self.target_main_patents = target_main_patents
         self.user_query = user_query
-        self.lambda_semantic = LAMBDA_SEMANTIC
         self.lambda_novelty = LAMBDA_NOVELTY
-        self.lambda_coherence = LAMBDA_COHERENCE
+        self.lambda_feasibility = LAMBDA_FEASIBILITY
     
     def calculate_reward(self, idea: GeneratedIdea) -> float:
         """
@@ -81,7 +80,7 @@ class RewardCalculator:
         feasibility_score = self._feasibility_score(idea)
         
         reward = (self.lambda_novelty * novelty_score +
-                 self.lambda_coherence * feasibility_score)
+                 self.lambda_feasibility * feasibility_score)
         print(f"Reward calculation details - Novelty: {novelty_score:.3f}, Feasibility: {feasibility_score:.3f} => Comprehensive Reward: {reward:.3f}")
         return reward
     
@@ -195,7 +194,7 @@ class RewardCalculator:
             score0 = safe_parse(resp, "feasibility_score")
             # score0 = extract_score(resp, 1, FEASIBILITY_RATING_SCALE)
             score = float(score0)
-            # 使用sigmoid函数标准化到(0,1)
+  
             x = (score - 3) / 2
             return 1 / (1 + np.exp(-5 * x))
         except Exception:
@@ -240,9 +239,8 @@ class RewardCalculator:
             novelty_score = 0.5
             feasibility_score = 0.5
 
-            reward = (self.lambda_semantic * semantic_score +
-                      self.lambda_novelty * novelty_score +
-                      self.lambda_coherence * feasibility_score)
+            reward = (self.lambda_novelty * novelty_score +
+                      self.lambda_feasibility * feasibility_score)
 
             return float(max(0.0, min(1.0, reward)))
         except Exception:
