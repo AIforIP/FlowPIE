@@ -24,7 +24,7 @@ Given the input topic, FlowPIE first explores a literature space composed of pat
 
 Each generated idea is automatically evaluated to produce a score that serves as the reward signal for updating the path flow probabilities in the MCTS process. After exploration, the top-5 highest-scoring ideas are selected as the initial population for the evolutionary stage. By incorporating patent-island information, the framework performs multiple rounds of crossover and mutation among the initial ideas to promote novel recombinations. Through this process, the system ultimately produces five high-quality scientific ideas.
 
-## Quick start ▶️
+## Quick start 🚀
 
 Create & activate the conda environment (we use a conda env named `flowpie`):
 
