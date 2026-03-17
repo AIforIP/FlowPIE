@@ -1,7 +1,12 @@
 <h3 align="center"><strong>FlowPIE</strong>: Test-Time Scientific Idea Evolution
 with Flow-Guided Literature Exploration</h3>
 
-[**🌐 Homepage**](https://flowpie.wangqiyao.me/) | [**🤗 Dataset**]() | [**📖 arXiv**](https://arxiv.org/abs/) | [**GitHub**](https://github.com/AIforIP/FlowPIE)
+<p align="center">
+  <a href="https://flowpie.wangqiyao.me/">🌐 Homepage</a> |
+  <a href="">🤗 Dataset</a> |
+  <a href="https://arxiv.org/abs/">📖 arXiv</a> |
+  <a href="https://github.com/AIforIP/FlowPIE">GitHub</a>
+</p>
 
 
 This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scientific Idea Evolution with Flow-Guided Literature Exploration](https://arxiv.org/abs/)"
