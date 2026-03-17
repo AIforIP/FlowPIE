@@ -1,5 +1,3 @@
-<h3 align="center"><img style="margin:auto;" src='./assets/logo.png' width=500px></h3>
-
 <h3 align="center"><strong>FlowPIE</strong>: A Test-Time Scientific Idea Evolution
 with Flow-Guided Literature Exploration</h3>
 
