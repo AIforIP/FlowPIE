@@ -1,4 +1,4 @@
-<h3 align="center"><strong>FlowPIE</strong>: A Test-Time Scientific Idea Evolution
+<h3 align="center"><strong>FlowPIE</strong>: Test-Time Scientific Idea Evolution
 with Flow-Guided Literature Exploration</h3>
 
 [**🌐 Homepage**](https://flowpie.wangqiyao.me/) | [**🤗 Dataset**]() | [**📖 arXiv**](https://arxiv.org/abs/) | [**GitHub**](https://github.com/AIforIP/FlowPIE)
