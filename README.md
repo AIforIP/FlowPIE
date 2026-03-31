@@ -6,7 +6,7 @@
 with Flow-Guided Literature Exploration</h3>
 
 <p align="center">
-  <a href="wangqiyao.me">Qiyao Wang</a><sup>1,2,*</sup>, Hongbo Wang<sup>3,*</sup>, Longze Chen<sup>1,2</sup>, Zhihao Yang<sup>1,2</sup>,
+  <a href="wangqiyao.me">Qiyao Wang</a><sup>1,2,*</sup>, Hongbo Wang<sup>3,*</sup>, Longze Chen<sup>1,2</sup>, Zhihao Yang<sup>1,2</sup> <br>
   Guhong Chen<sup>1</sup>, Hui Li<sup>6</sup>, Hamid Alinejad-Rokny<sup>4</sup>, Yuan Lin<sup>3,†</sup>, Min Yang<sup>1,5,†</sup>
 </p>
 
@@ -25,7 +25,6 @@ with Flow-Guided Literature Exploration</h3>
   <a href="https://github.com/AIforIP/FlowPIE">GitHub</a>
 </p>
 
----
 
 This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scientific Idea Evolution with Flow-Guided Literature Exploration](https://arxiv.org/abs/)"
 
