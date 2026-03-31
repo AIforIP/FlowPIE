@@ -35,15 +35,34 @@ This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scient
 
 ## 📝 Introduction
 
-Scientific idea generation (SIG) is critical to AI-driven autonomous research, yet existing approaches are often constrained by a static retrieval-then-generation paradigm, leading to homogeneous and insufficiently divergent ideas. In this work, we propose FlowPIE, a tightly coupled retrieval–generation framework that treats literature exploration and idea generation as a co-evolving process. FlowPIE expands literature trajectories via a flow-guided Monte Carlo Tree Search (MCTS) inspired by GFlowNets, using the quality of current ideas assessed by an LLM-based generative reward model (GRM) as a supervised signal to guide adaptive retrieval and construct a diverse, high-quality initial idea population. Based on this population, FlowPIE models idea generation as a test-time idea evolution process, applying selection, crossover, and mutation with the isolation island paradigm and GRM-based fitness computation to incorporate cross-domain knowledge. It effectively mitigates the information cocoons arising from over-reliance on parametric knowledge and static literature. Extensive evaluations demonstrate that FlowPIE consistently produces ideas with higher novelty, feasibility and diversity compared to strong LLM-based and agent-based frameworks, while enabling reward scaling during test time.
+Currently, many **AI for Research / Auto Research** efforts aim to cover the entire scientific workflow—from literature retrieval to paper writing. In contrast, we focus on the most fundamental and open-ended front-end problem: **Scientific Idea Generation**. Unlike the traditional pipeline of *“literature retrieval → large model generation,”* FlowPIE decomposes scientific innovation into two key stages: **a high-quality initial population** and **a continuous evolution process**.
 
+First, inspired by GFlowNet, we propose a **Flow-Guided MCTS** to dynamically explore the literature graph. By using idea quality as a feedback signal to guide exploration paths, we construct an initial population of ideas that is **high-quality, diverse, and cross-disciplinary** from the outset. Notably, even the initial population alone significantly outperforms existing methods, serving as a very strong starting point.
+However, we further observe that relying solely on continued exploration from the initial population quickly leads to a **reward plateau**—as exploration becomes saturated, gains diminish, making it difficult to further improve idea novelty and feasibility.
+
+To address this, FlowPIE introduces an explicit **test-time idea evolution** mechanism. Through **selection, structured crossover, and cross-domain mutation via “islands,”** the system continuously refines existing ideas while injecting new information. This enables the process to escape local optima and sustain innovation through iterative exploration and feedback, rather than being confined to incremental refinements along existing paths.
 
 ## ✨ Highlights 
 
-- Flow-guided MCTS: expand promising literature trajectories using flow-based scores (GFlowNet-inspired).
-- GRM (Generative Reward Model): LLM-based evaluator to score ideas and guide both retrieval and evolution.
-- Idea evolution at test time: selection, crossover, mutation with isolation-island parallelism to encourage cross-domain mixing and diversity.
-- Provide detailed ideas, with verifiable experimental design plans.
+🌟 We summarize three key contributions:
+
+1️⃣ **Flow-Guided Initialization Mechanism**  
+Constructs a high-quality initial population through exploration and feedback, significantly improving both the starting point and the upper bound
+
+2️⃣ **Idea Evolution Framework**  
+Addresses exploration bottlenecks by introducing selection, crossover, and cross-domain mutation, enabling sustained innovation and breakthroughs
+
+3️⃣ **Test-time Scaling of Ideas**  
+Demonstrates that idea generation exhibits test-time scaling properties: *more compute → higher-quality ideas*
+
+📈 Experimentally, we observe several key phenomena:
+
+- The initial population itself is highly competitive, even surpassing multiple LLM- and agent-based baselines
+- Pure exploration (Flow-Guided MCTS) exhibits a clear reward plateau, with diminishing returns
+- Introducing evolution continuously breaks this bottleneck, shifting the reward distribution toward higher-quality regions and achieving more stable convergence
+- The overall process exhibits a clear test-time scaling curve: initial exploration fluctuations → evolutionary improvement → final stable convergence
+- Compared to naive test-time scaling (which often leads to redundancy and mode collapse), FlowPIE consistently improves coverage of the idea space
+- Across multiple benchmarks and human evaluations, FlowPIE significantly outperforms existing methods in **novelty, feasibility, and diversity**
 
 ![FlowPIE overview](./assets/overview.bmp)
 
