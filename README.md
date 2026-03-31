@@ -100,7 +100,7 @@ When citing this work, please use the following BibTeX entry:
 ```
 
 ## Contact
-`wangqiyao25@mails.ucas.ac.cn`
+Feel free to contact the author with `wangqiyao25@mails.ucas.ac.cn`.
 
 
 
