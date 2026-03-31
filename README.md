@@ -69,6 +69,10 @@ Demonstrates that idea generation exhibits test-time scaling properties: *more c
 
 ![FlowPIE overview](./assets/overview.bmp)
 
+## 📅 Timeline
+
+- [x] Code
+
 ## 🚀 Quick start 
 
 Create & activate the conda environment (we use a conda env named `flowpie`):
