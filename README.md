@@ -36,7 +36,7 @@ This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scient
 ## 📅 Timeline
 
 - [x] Code
-- [] Literature Database (comming soon)
+- [ ] Literature Database (comming soon)
 
 
 ## 📝 Introduction
