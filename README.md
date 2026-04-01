@@ -44,7 +44,7 @@ This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scient
 
 <img src="./assets/figure1.bmp" width="40%" align="right" style="margin-left: 20px; margin-bottom: 10px;" alt="FlowPIE Framework">
 
-Currently, many **AI for Research / Auto Research** efforts aim to cover the entire scientific workflow—from literature retrieval to paper writing. In contrast, we focus on the most fundamental and open-ended front-end problem: **Scientific Idea Generation**. Unlike the traditional pipeline of *"literature retrieval → large model generation,"* FlowPIE decomposes scientific innovation into two key stages: **a high-quality initial population** and **a continuous evolution process**.
+Currently, many **AI for Research / Auto Research** efforts aim to cover the entire scientific workflow—from literature retrieval to paper writing. In contrast, we focus on the most fundamental and open-ended front-end problem: **Scientific Idea Generation**. Unlike the traditional pipeline of *"literature retrieval → LLM generation,"* FlowPIE decomposes scientific innovation into two key stages: **a high-quality initial population** and **a continuous evolution process**.
 
 First, inspired by GFlowNet, we propose a **Flow-Guided MCTS** to dynamically explore the literature graph. By using idea quality as a feedback signal to guide exploration paths, we construct an initial population of ideas that is **high-quality, diverse, and cross-disciplinary** from the outset. Notably, even the initial population alone significantly outperforms existing methods, serving as a very strong starting point.
 
