@@ -30,8 +30,8 @@ This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scient
 
 ## 🔔 News
 
-- 📑 [2026-04-01]: Releasing [Preprint](https://arxiv.org/pdf/2603.29557).
-- 😄 [2026-03-25]: Releasing [Website](https://flowpie.wangqiyao.me/).
+- 📑 [2026-04-01] Releasing [Preprint](https://arxiv.org/pdf/2603.29557).
+- 😄 [2026-03-25] Releasing [Website](https://flowpie.wangqiyao.me/).
 - 🔥 [2026-01-01] Research Begining.
 
 ## 📅 Timeline
