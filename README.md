@@ -20,15 +20,16 @@ with Flow-Guided Literature Exploration</h3>
 <p align="center">
   <a href="https://flowpie.wangqiyao.me/">🌐 Homepage</a> |
   <a href="">🤗 Dataset</a> |
-  <a href="https://arxiv.org/abs/">📖 Paper</a> |
+  <a href="https://arxiv.org/pdf/2603.29557">📖 Paper</a> |
   <a href="https://github.com/AIforIP/FlowPIE">GitHub</a>
 </p>
 
 
-This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scientific Idea Evolution with Flow-Guided Literature Exploration](https://arxiv.org/abs/)"
+This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scientific Idea Evolution with Flow-Guided Literature Exploration](https://arxiv.org/pdf/2603.29557)"
 
 ## 🔔 News
 
+- 📑 [2026-04-01]: Releasing [Preprint](https://arxiv.org/pdf/2603.29557).
 - 😄 [2026-03-25]: Releasing [Website](https://flowpie.wangqiyao.me/).
 - 🔥 [2026-01-01] Research Begining.
 
