@@ -33,6 +33,11 @@ This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scient
 - 😄 [2026-03-25]: Releasing [Website](https://flowpie.wangqiyao.me/).
 - 🔥 [2026-01-01] Research Begining.
 
+## 📅 Timeline
+
+- [x] Code
+- [] Literature Database (comming soon)
+
 
 ## 📝 Introduction
 
@@ -70,9 +75,6 @@ Demonstrates that idea generation exhibits test-time scaling properties: *more c
 
 ![FlowPIE overview](./assets/overview.bmp)
 
-## 📅 Timeline
-
-- [x] Code
 
 ## 🚀 Quick start 
 
