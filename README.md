@@ -21,6 +21,7 @@ with Flow-Guided Literature Exploration</h3>
   <a href="https://flowpie.wangqiyao.me/">🌐 Homepage</a> |
   <a href="">🤗 Dataset</a> |
   <a href="https://arxiv.org/pdf/2603.29557">📖 Paper</a> |
+  <a href="https://huggingface.co/papers/2603.29557">🤗 HuggingFace Paper</a> |
   <a href="https://github.com/AIforIP/FlowPIE">GitHub</a>
 </p>
 
@@ -37,7 +38,7 @@ This repo contains the evaluation code for the paper "[FlowPIE: Test-Time Scient
 
 - [x] Code
 - [ ] Literature Database (comming soon)
-
+- [ ] Software Demostration (comming soon)
 
 ## 📝 Introduction
 
