@@ -107,7 +107,12 @@ python -m src.phase2.main
 When citing this work, please use the following BibTeX entry:
 
 ```bibtex
-
+@article{wang2026flowpie,
+  title={FlowPIE: Test-Time Scientific Idea Evolution with Flow-Guided Literature Exploration},
+  author={Wang, Qiyao and Wang, Hongbo and Chen, Longze and Yang, Zhihao and Chen, Guhong and Alinejad-Rokny, Hamid and Li, Hui and Lin, Yuan and Yang, Min},
+  journal={arXiv preprint arXiv:2603.29557},
+  year={2026}
+}
 ```
 
 ## Contact
